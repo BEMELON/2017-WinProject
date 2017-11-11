@@ -1,6 +1,8 @@
 #pragma once
 #include "iostream"
 #include "Window.h"
+class MenuBar;
+class Menu;
 class Frame
 {
 public:
@@ -38,9 +40,12 @@ public:
 	Window * find(int x, int y);
 protected:
 	Window * windows[100];  // 나중에는 제대로 된 리스트로 바꿔야한다.
+    MenuBar * m_Menubar;
 	int numWidget = 0;
 public:
 	void registerWindow(Window * w);
+    void registerMenuBar(MenuBar *f);
+    void registerMenu(Menu *m);
 
 };
 
