@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Window.h"
-#include "View.h"
+#include "Frame.h"
 #include <fstream>
 
 Window::Window(int x, int y, int sx, int sy) :
@@ -11,16 +11,16 @@ Window::Window(string s, int x, int y, int sx, int sy)
 {
 	m_text = s;
 }
-void Window::setView(View *v) {
-	m_view = v;
+void Window::setFrame(Frame *v) {
+	m_Frame = v;
 }
 void Window::display() {
-	m_view->setPen(RGB(100, 100, 100), 1);
-	m_view->rectangle(m_x, m_y, m_xsize, m_ysize);
+	m_Frame->setPen(RGB(100, 100, 100), 1);
+	m_Frame->rectangle(m_x, m_y, m_xsize, m_ysize);
 	drawContent();
 }
 void Window::drawContent() {
-	m_view->drawText(m_text, m_x + 5, m_y + 5);
+	m_Frame->drawText(m_text, m_x + 5, m_y + 5);
 }
 void Window::onMouseClick(int x, int y) {
 	//logger << "Window clicked, ";

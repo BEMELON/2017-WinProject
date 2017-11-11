@@ -1,11 +1,11 @@
 #pragma once
 #include "iostream"
 #include "Window.h"
-class View
+class Frame
 {
 public:
-	View(HWND);
-	~View();
+	Frame(HWND);
+	~Frame();
 protected:
 	HWND myWnd;
 	HDC hDC;

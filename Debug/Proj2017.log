@@ -1,7 +1,4 @@
-﻿  View.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Label.cpp
-  코드를 생성하고 있습니다...
-  Proj2017.vcxproj -> C:\Users\hgdki\Desktop\winproj (1)\Debug\Proj2017.exe
-  Proj2017.vcxproj -> C:\Users\hgdki\Desktop\winproj (1)\Debug\Proj2017.pdb (Full PDB)
+﻿cl : 명령줄 warning D9028: 최소 다시 빌드에 실패했습니다. 정상 빌드로 되돌립니다.
+  Frame.cpp
+  Proj2017.vcxproj -> C:\Users\hgdki\OneDrive\Documents\2017-WinProject\Debug\Proj2017.exe
+  Proj2017.vcxproj -> C:\Users\hgdki\OneDrive\Documents\2017-WinProject\Debug\Proj2017.pdb (Full PDB)

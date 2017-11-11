@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
 using namespace std;
-class View;
+class Frame;
 class Window {
 public:
 	Window(int x, int y, int sx, int sy);
 	Window(string s, int x, int y, int sx, int sy);
-	void setView(View *);
+	void setFrame(Frame *);
 	void display();
 	void drawContent();
 	virtual void onMouseClick(int x, int y);
@@ -14,6 +14,6 @@ public:
 protected:
 	int m_x, m_y, m_xsize, m_ysize;
 	string m_text;
-	View *m_view;
+	Frame *m_Frame;
 private:
 };
