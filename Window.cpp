@@ -33,3 +33,4 @@ bool Window::isInside(int x, int y) {
 	return m_x <= x && x < m_x + m_xsize &&
 		m_y <= y && y < m_y + m_ysize;
 }
+

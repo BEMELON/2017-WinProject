@@ -28,12 +28,17 @@ public:
 	void setPen(COLORREF color, int width);   // 펜 색깔과 두께까지 설정.
 	void setFillColor(COLORREF color);
 	void setTextColor(COLORREF color);
+    void setMenuBar(MenuBar *);
 
 	void rectangle(int x, int y, int sizeX, int sizeY);
 	void ellipse(int x, int y, int sizeX, int sizeY);
 	void line(int x, int y, int sizeX, int sizeY);
 	void drawText(std::string str, int x, int y);
 	void display();
+
+
+    void registerWindow(Window * w);
+    void registerMenu(Menu *);
 	//void eraseAll();
 	void invalidate();
 	void onInitialize();
@@ -42,10 +47,6 @@ protected:
 	Window * windows[100];  // 나중에는 제대로 된 리스트로 바꿔야한다.
     MenuBar * m_Menubar;
 	int numWidget = 0;
-public:
-	void registerWindow(Window * w);
-    void registerMenuBar(MenuBar *f);
-    void registerMenu(Menu *m);
 
 };
 

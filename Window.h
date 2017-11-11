@@ -6,8 +6,8 @@ class Window {
 public:
 	Window(int x, int y, int sx, int sy);
 	Window(string s, int x, int y, int sx, int sy);
-	void setFrame(Frame *);
-	void display();
+	virtual void setFrame(Frame *);
+	virtual void display();
 	void drawContent();
 	virtual void onMouseClick(int x, int y);
 	bool isInside(int x, int y);
