@@ -159,11 +159,6 @@ void Frame::invalidate()
 void Frame::onInitialize()
 {
 	// *** 모든 윈도들을 여기에서 초기화하자.
-    /*
-	registerWindow(new Window("apple1",100, 50, 80, 30));
-	registerWindow(new Window("kiwi", 100, 150, 80, 30 ));
-	registerWindow(new Window("banana", 100, 250, 80, 30 ));
-    */
     registerWindow(new MenuBar("MenuBar",0,0,620, 30));
     registerMenu(new Menu("File",0,0,620,30));
     registerMenu(new Menu("Edit", 0, 0, 620, 30));

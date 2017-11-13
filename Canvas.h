@@ -6,6 +6,7 @@ class Canvas :
 {
 public:
     Canvas(std::string name,int x, int y, int sx, int sy);
+    void onMouseClick(int x, int y);
     void display();
     ~Canvas();
 };
