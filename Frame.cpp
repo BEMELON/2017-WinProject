@@ -3,10 +3,13 @@
 #include "stdio.h"
 #include "iostream"
 #include "string"
-#include "Window.h"
+#include "Container.h"
 #include "MenuBar.h"
 #include "Menu.h"
 #include "Canvas.h"
+#include "Window.h"
+/*
+*/
 using namespace std;
 
 Frame::Frame(HWND w):myWnd(w)
@@ -173,7 +176,7 @@ void Frame::registerMenu(Menu * m)
     m_Menubar->setMenu(m);
 }
 
-void Frame::registerWindow(Window * w)
+void Frame::registerWindow(Window* w)
 {
 	 // *** 포인터 배열에 더해주고, 윈도에도 이 Frame 객체의 포인터를 저장해주자.
 	windows[numWidget++] = w;

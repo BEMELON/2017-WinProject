@@ -4,12 +4,12 @@
 #include "Frame.h"
 #include "Menu.h"
 MenuBar::MenuBar(std::string name,int x, int y, int sx, int sy)
-    :Window(name,x, y, sx, sy)
+    :Container(name,x, y, sx, sy)
 {    
 }
 
 MenuBar::MenuBar(int x, int y, int sx, int sy)
-    :Window(x, y, sx, sy)
+    :Container(x, y, sx, sy)
 {
 }
 

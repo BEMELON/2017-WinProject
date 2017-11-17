@@ -1,10 +1,10 @@
 #pragma once
-#include "Window.h"
+#include "Container.h"
 #include <string>
 class Menu;
 class Frame;
 class MenuBar
-    :public Window
+    :public Container
 {
 public:
     MenuBar(std::string name,int x, int y, int sx, int sy);

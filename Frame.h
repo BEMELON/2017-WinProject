@@ -1,9 +1,11 @@
 #pragma once
 #include "iostream"
-#include "Window.h"
+#include "Container.h"
 class MenuBar;
 class Menu;
+class Canvas;
 class Frame
+    :public Container
 {
 public:
 	Frame(HWND);
@@ -43,10 +45,7 @@ public:
 	void invalidate();
 	void onInitialize();
 	Window * find(int x, int y);
-protected:
-	Window * windows[100];  // 나중에는 제대로 된 리스트로 바꿔야한다.
-    MenuBar * m_Menubar;
-	int numWidget = 0;
+	
 
 };
 

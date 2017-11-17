@@ -4,6 +4,7 @@ using namespace std;
 class Frame;
 class Window {
 public:
+    Window();
 	Window(int x, int y, int sx, int sy);
 	Window(string s, int x, int y, int sx, int sy);
 	virtual void setFrame(Frame *);

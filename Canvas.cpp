@@ -16,11 +16,9 @@ void Canvas::display()
 
 void Canvas::onMouseClick(int x, int y)
 {
-    OutputDebugString(" X : ");
-    OutputDebugString(to_string(x).c_str());
-    OutputDebugString(" Y : ");
-    OutputDebugString(to_string(y).c_str());
-    OutputDebugString("\n");
+    string s = "X :" + to_string(x) + "Y : " + to_string(y) + "\n";
+    OutputDebugString(s.c_str());
+
 
 }
 

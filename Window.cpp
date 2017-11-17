@@ -3,6 +3,7 @@
 #include "Frame.h"
 #include <fstream>
 
+Window::Window() { /* ´«¼ÓÀÓ */ }
 Window::Window(int x, int y, int sx, int sy) :
 	m_x(x), m_y(y), m_xsize(sx), m_ysize(sy), m_text("") {
 }
