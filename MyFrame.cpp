@@ -15,16 +15,16 @@ void MyFrame::onInitialize()
     addCanvas(new Canvas());
 
     // menuFile 등등은 멤버 변수로 했다. 나중에  event source를 파악해야하니까.
-    m_menubar->addMenu(menuFile = new Menu("파일"));
-    m_menubar->addMenu(menuEdit = new Menu("편집"));
+    m_menubar->addMenu(menuFigure = new Menu("도형"));
+    m_menubar->addMenu(menuColor = new Menu("색"));
 
-    menuFile->addMenuItem(miOpen = new MenuItem("열기"));
-    menuFile->addMenuItem(miSave = new MenuItem("저장"));
-    menuFile->addMenuItem(miExit = new MenuItem("끝내기"));
+    menuFigure->addMenuItem(miSquare = new MenuItem("사각형"));
+    menuFigure->addMenuItem(miElipse = new MenuItem("타원"));
+    menuFigure->addMenuItem(miLine = new MenuItem("선분"));
 
-    menuEdit->addMenuItem(miCopy = new MenuItem("복사"));
-    menuEdit->addMenuItem(miCut = new MenuItem("자르기"));
-    menuEdit->addMenuItem(miPaste = new MenuItem("붙이기"));
+    menuColor->addMenuItem(miBlack = new MenuItem("검은색"));
+    menuColor->addMenuItem(miRed = new MenuItem("빨간색"));
+    menuColor->addMenuItem(miBlue = new MenuItem("파란색"));
 }
 
 MyFrame::~MyFrame()

@@ -7,7 +7,8 @@
 #include "Button.h"
 #include "MenuItem.h"
 using namespace std;
-
+enum{사각형,타원,선분};
+enum{검은색,빨간색,파란색};
 Frame::Frame(HWND w):Container(0,0,640,480),myWnd(w)
 {
 	hDC = ::GetDC(w);
@@ -116,7 +117,13 @@ void Frame::setTextColor(COLORREF color)
 void Frame::processEvent(Window * src)
 {
     for (int i = 0; i < numWindows; i++) {
-        
+        if (m_window[i]->getTitle() == "사각형") m_FigureType = 사각형;
+        else if (m_window[i]->getTitle() == "타원") m_FigureType = 타원;
+        else if (m_window[i]->getTitle() == "선분") m_FigureColor = 선분;
+
+        if (m_window[i]->getTitle() == "검은색") m_FigureColor = 검은색;
+        else if (m_window[i]->getTitle() == "빨간색") m_FigureColor = 빨간색;
+        else if (m_window[i]->getTitle() == "파란색")m_FigureColor = 파란색;
     }
 }
 

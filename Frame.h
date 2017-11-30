@@ -46,5 +46,7 @@ public:
 	void addMenuBar(MenuBar * mb);
 	void setSize(int x, int y);
 	void addCanvas(Canvas * c);
+    int m_FigureType = 0;
+    int m_FigureColor = 0;
 };
 

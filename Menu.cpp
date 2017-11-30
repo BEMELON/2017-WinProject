@@ -23,7 +23,11 @@ Window* Menu::find(int x, int y)
         m_stat = true; getFrame()->invalidate();
         return this;
     }
-    else if (m_stat) return Container::find(x, y);
+    else if (m_stat) {
+        Window *temp = Container::find(x, y);
+        getFrame()->processEvent(temp);
+        return temp;
+    }
     else {
         //m_stat = false;  getFrame()->invalidate();
         return (Window *)0;

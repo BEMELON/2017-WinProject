@@ -9,8 +9,8 @@ public:
     MyFrame(HWND);
     void onInitialize();
     ~MyFrame();
-    Menu *menuFile, *menuEdit;
-    MenuItem *miOpen, *miSave, *miExit, *miCopy, *miCut, *miPaste;
+    Menu *menuColor, *menuFigure;
+    MenuItem *miSquare, *miElipse, *miLine, *miRed, *miBlack, *miBlue;
     
 };
 
