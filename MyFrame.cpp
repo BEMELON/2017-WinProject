@@ -11,8 +11,8 @@ MyFrame::MyFrame(HWND hwnd)
 void MyFrame::onInitialize()
 {
     // *** 모든 윈도들을 여기에서 초기화하자.
-    addMenuBar(new MenuBar());
     addCanvas(new Canvas());
+    addMenuBar(new MenuBar());
 
     // menuFile 등등은 멤버 변수로 했다. 나중에  event source를 파악해야하니까.
     m_menubar->addMenu(menuFigure = new Menu("도형"));

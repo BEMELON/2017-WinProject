@@ -116,15 +116,13 @@ void Frame::setTextColor(COLORREF color)
 
 void Frame::processEvent(Window * src)
 {
-    for (int i = 0; i < numWindows; i++) {
-        if (m_window[i]->getTitle() == "사각형") m_FigureType = 사각형;
-        else if (m_window[i]->getTitle() == "타원") m_FigureType = 타원;
-        else if (m_window[i]->getTitle() == "선분") m_FigureColor = 선분;
+        if (src->getTitle() == "사각형") m_FigureType = 사각형;
+        else if (src->getTitle() == "타원") m_FigureType = 타원;
+        else if (src->getTitle() == "선분") m_FigureType = 선분;
 
-        if (m_window[i]->getTitle() == "검은색") m_FigureColor = 검은색;
-        else if (m_window[i]->getTitle() == "빨간색") m_FigureColor = 빨간색;
-        else if (m_window[i]->getTitle() == "파란색")m_FigureColor = 파란색;
-    }
+        if (src->getTitle() == "검은색") m_FigureColor = 검은색;
+        else if (src->getTitle() == "빨간색") m_FigureColor = 빨간색;
+        else if (src->getTitle() == "파란색")m_FigureColor = 파란색;
 }
 
 

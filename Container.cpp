@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Container.h"
+#include "Frame.h"
 #include <string>
 Container::Container()
 	:Window(0,0,0,0)
@@ -49,6 +50,7 @@ Window * Container::find(int x, int y)
 	for (int i = numWindows - 1; i >= 0; i--) {
 		//OutputDebugString(m_window[i]->getTitle().c_str());
 		if (m_window[i]->isInside(x, y)) {
+            //getFrame()->processEvent(m_window[i]);
 			return m_window[i];
 		}
 	}

@@ -81,6 +81,7 @@ void Menu::onMouseClick(int x, int y)
     else {
         for (int i = numWindows - 1; i >= 0; i--) {
             if (m_window[i]->isInside(x, y))
+                getFrame()->processEvent(m_window[i]);
                 m_window[i]->onMouseClick(x, y);
         }
     }
