@@ -1,13 +1,18 @@
 #pragma once
 #include "Window.h"
-#include <iostream>
-class Canvas :
-    public Window
+class Frame;
+class Point;
+class Canvas: public Window
 {
 public:
-    Canvas(std::string name,int x, int y, int sx, int sy);
-    void onMouseClick(int x, int y);
-    void display();
-    ~Canvas();
+    int PointCnt = 0;
+	Canvas();
+	~Canvas();
+	//Frame * m_frame;
+	//void setFrame(Frame *);
+	void onMouseDown(int x, int y);
+    void onMouseUp(int x, int y);
+	void display();
+    Point *m_Point[100];
 };
 

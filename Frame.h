@@ -1,11 +1,10 @@
 #pragma once
 #include "iostream"
+#include "Window.h"
+#include "MenuBar.h"
+#include "Canvas.h"
 #include "Container.h"
-class MenuBar;
-class Menu;
-class Canvas;
-class Frame
-    :public Container
+class Frame: public Container
 {
 public:
 	Frame(HWND);
@@ -30,22 +29,22 @@ public:
 	void setPen(COLORREF color, int width);   // Ææ »ö±ò°ú µÎ²²±îÁö ¼³Á¤.
 	void setFillColor(COLORREF color);
 	void setTextColor(COLORREF color);
-    void setMenuBar(MenuBar *);
+    void processEvent(Window * src);
 
 	void rectangle(int x, int y, int sizeX, int sizeY);
 	void ellipse(int x, int y, int sizeX, int sizeY);
 	void line(int x, int y, int sizeX, int sizeY);
 	void drawText(std::string str, int x, int y);
-	void display();
-
-
-    void registerWindow(Window * w);
-    void registerMenu(Menu *);
-	//void eraseAll();
 	void invalidate();
-	void onInitialize();
-	Window * find(int x, int y);
-	
+	virtual void onInitialize();
 
+protected:
+
+public:
+	MenuBar *m_menubar = nullptr;  // 
+	Canvas *m_canvas = nullptr;
+	void addMenuBar(MenuBar * mb);
+	void setSize(int x, int y);
+	void addCanvas(Canvas * c);
 };
 

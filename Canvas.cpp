@@ -1,27 +1,52 @@
 #include "stdafx.h"
 #include "Canvas.h"
 #include "Frame.h"
-#include <string>
-
-Canvas::Canvas(std::string name, int x, int y, int sx, int sy)
-    :Window(name, x, y, sx, sy)
+#include "Point.h"
+Canvas::Canvas()
 {
 }
 
-void Canvas::display()
-{
-    m_Frame->setPen(RGB(100, 100, 100), 1);
-    m_Frame->rectangle(m_x, m_y, m_xsize, m_ysize);  
-}
-
-void Canvas::onMouseClick(int x, int y)
-{
-    string s = "X :" + to_string(x) + "Y : " + to_string(y) + "\n";
-    OutputDebugString(s.c_str());
-
-
-}
 
 Canvas::~Canvas()
 {
+}
+
+
+//void Canvas::setFrame(Frame *f)
+//{
+//	m_frame = f;
+//}
+
+
+void Canvas::onMouseDown(int x, int y)
+{
+	string s = "Canvas: " + to_string(x) + ", " + to_string(y) + "\n";
+	OutputDebugString(s.c_str());
+    m_Point[PointCnt] = new Point(x, y);
+    m_Point[PointCnt]->setContainer(m_container);
+
+    /*
+    m_Point[PointCnt]->end_x = x + 80;
+    m_Point[PointCnt++]->end_y = y + 80;
+    getFrame()->invalidate();
+    */
+}
+
+void Canvas::onMouseUp(int x, int y)
+{
+    //HDC hdc;
+    //LineTo(hdc, start_x, start_y);
+    m_Point[PointCnt]->end_x = x;
+    m_Point[PointCnt++]->end_y = y;
+    getFrame()->invalidate();
+}
+
+
+void Canvas::display()
+{
+	getFrame()->drawText("여기는 캔버스", 200,200);
+    for (int i = 0; i < PointCnt; i++) {
+        m_Point[i]->display();
+    }
+    //getFrame()->invalidate();
 }

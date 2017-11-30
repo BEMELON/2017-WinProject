@@ -1,57 +1,50 @@
 #include "stdafx.h"
-#include <string>
 #include "MenuBar.h"
-#include "Frame.h"
-#include "Menu.h"
-MenuBar::MenuBar(std::string name,int x, int y, int sx, int sy)
-    :Container(name,x, y, sx, sy)
-{    
-}
 
-MenuBar::MenuBar(int x, int y, int sx, int sy)
-    :Container(x, y, sx, sy)
+
+MenuBar::MenuBar()
 {
+	m_x = 0; m_y = 0;
+	m_text = "Menubar";
+	m_xsize = 640;
+	m_ysize = 30;
 }
 
-void MenuBar::display() 
-{
-    m_Frame->rectangle(0, 0, m_xsize, m_ysize);
-    for (int i = 0; i < m_MenuCnt; i++) 
-    {
-        m_Menu[i]->draw();
-    }
-}
-
-void MenuBar::setFrame(Frame *f)
-{
-    m_Frame = f;
-    f->setMenuBar(this);
-}
-
-void MenuBar::onMouseClick(int x, int y)
-{
-    OutputDebugString(m_text.c_str());
-    OutputDebugString(" Clicked \n");
-    for (int i = 0; i < m_MenuCnt; i++)
-    {
-        bool check;
-        check = m_Menu[i]->isInside(x,y);
-        if (check)
-            m_Menu[i]->onMouseClick(x, y);
-    }
-}
-
-void MenuBar::setMenu(Menu *m)
-{   
-    if (m_MenuCnt < 10)
-    {
-        m_Menu[m_MenuCnt] = m;
-        m_Menu[m_MenuCnt]->setPos(m_MenuCnt);
-        m_Menu[m_MenuCnt]->setFrame(m_Frame);
-        m_MenuCnt++;
-    }
-}
 
 MenuBar::~MenuBar()
 {
 }
+
+void MenuBar::onMouseClick(int x, int y)
+{
+	//OutputDebugString("MenuBar Clicked. ");
+	//Container::onMouseClick(x, y);  // 소속 윈도 중에 해당자를 불러주는 일. 나중에 바꾼다.
+	Menu *m = (Menu *)find(x, y);
+	if (m) {
+		m->onMouseClick(x, y);
+	}
+    else Window::onMouseClick(x, y);
+}
+
+void MenuBar::addMenu(Menu *m) {
+	Container::addWindowLast(m);
+	m->setContainer(this);
+	for (int i = 0; i < numWindows; i++) {
+		m_window[i]->setX(i * 100);
+	}
+}
+
+int MenuBar::getHeight()
+{
+	return m_ysize;
+}
+
+bool MenuBar::isInside(int x, int y)
+{
+	if (Window::isInside(x, y)) return true;     // 메뉴바 자체 부분이거나
+	if (find(x, y)) return true;
+		  // 아니더라도 펼쳐진 메뉴 부분일 수 있다.
+	return false;
+}
+
+

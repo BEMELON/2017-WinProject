@@ -3,17 +3,28 @@
 
 #include "stdafx.h"
 #include "Controller.h"
-#include "Frame.h"   // 조세형
+#include "MyFrame.h"   // 조세형
 
 #define MAX_LOADSTRING 100
 
+//void print(string s) {
+//	OutputDebugString(s.c_str());
+//}
+void print(string s) {
+	OutputDebugString(s.c_str());
+}
+void print(int n) {
+	char buf[20];
+	sprintf_s(buf, " %d ", n);
+	OutputDebugString(buf);
+}
 // 전역 변수:
 HINSTANCE hInst;								// 현재 인스턴스입니다.
 TCHAR szTitle[MAX_LOADSTRING];					// 제목 표시줄 텍스트입니다.
 TCHAR szWindowClass[MAX_LOADSTRING];			// 기본 창 클래스 이름입니다.
 
 // MS 의 더러운 구조 때문에 어쩔 수 없이 전역변수로.
-Frame * mainFrame = NULL;
+Frame * mainView = NULL;
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -101,7 +112,7 @@ HWND g_hWnd = NULL;
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    //HWND hWnd;  // 전역으로 보내자.
-
+    
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    g_hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -111,7 +122,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
-   mainFrame = new Frame(g_hWnd);  // 조세형
+   mainView = new MyFrame(g_hWnd);  // 조세형
+   mainView->onInitialize();
+
+   //mainView->setFrame(mainView);
+   //mainView->setContainer(mainView);   // 이제는 필요 없다.
 
    ShowWindow(g_hWnd, nCmdShow);
    UpdateWindow(g_hWnd);
@@ -165,8 +180,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				 PAINTSTRUCT ps;
 				 HDC hdc = BeginPaint(hWnd, &ps);
 				 // TODO: Add any drawing code that uses hdc here...
-				 if (mainFrame)
-					 mainFrame->display();
+				 RECT rect;
+				 GetWindowRect(hWnd, &rect);
+				 if (mainView) {
+					 //OutputDebugString("Width");
+					// print(rect.right - rect.left);
+					 mainView->setSize(rect.right-rect.left,
+						 rect.bottom-rect.top);
+					 mainView->display();
+				 }
 				 EndPaint(hWnd, &ps);
 				 
 			}
@@ -177,25 +199,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_LBUTTONDOWN:
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
-			mainFrame->OnLButtonDown(wParam, x, y);
+			mainView->OnLButtonDown(wParam, x, y);
+			mainView->invalidate();
 			break;
 		case WM_LBUTTONUP:
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
-			mainFrame->OnLButtonUp(wParam, x, y);
+			mainView->OnLButtonUp(wParam, x, y);
 			break;
 		case WM_RBUTTONDOWN:
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
-			mainFrame->OnRButtonDown(wParam, x, y);
+			mainView->OnRButtonDown(wParam, x, y);
 			break;
 		case WM_RBUTTONUP:
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
-			mainFrame->OnRButtonUp(wParam, x, y);
+			mainView->OnRButtonUp(wParam, x, y);
 			break;
 		case WM_CHAR:
-			mainFrame->OnChar(wParam);
+			mainView->OnChar(wParam);
 			break;
 
 		default:

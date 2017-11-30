@@ -1,16 +1,26 @@
 #pragma once
-#include "MenuBar.h"
-#include <string> 
+#include "Window.h"
+#include "Container.h"
+class MenuItem;
+class MenuBar;
+class Canvas;
 class Menu :
-    public MenuBar
+	public Container
 {
 public:
-    Menu(const std::string name, int x, int y, int sx, int sy);
-    void setPos(int Menucnt);
-    void setFrame(Frame *);
-    void draw();
-    ~Menu();
-private:
-   
+	Menu(string title);
+	~Menu();
+    void setStat();
+	void onMouseClick(int x, int y);
+    void addMenuItem(Window *);
+    Window* find(int x, int y);
+    bool m_stat = false;
+    void display();
+    bool isInside(int x, int y);
+    
+protected:
+
+public:
+	//MenuBar * getMenuBar();
 };
 

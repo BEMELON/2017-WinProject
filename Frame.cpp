@@ -3,20 +3,17 @@
 #include "stdio.h"
 #include "iostream"
 #include "string"
-#include "Container.h"
-#include "MenuBar.h"
-#include "Menu.h"
-#include "Canvas.h"
 #include "Window.h"
-/*
-*/
+#include "Button.h"
+#include "MenuItem.h"
 using namespace std;
 
-Frame::Frame(HWND w):myWnd(w)
+Frame::Frame(HWND w):Container(0,0,640,480),myWnd(w)
 {
 	hDC = ::GetDC(w);
-
-	onInitialize();
+	//setFrame(this);  // 이놈도 필요하다.
+	setContainer(this);   // 자신을 가리키게 만들어서 Frame임을 표시.
+	//onInitialize();
 }
 
 void Frame::setWnd(HWND hWnd) {
@@ -26,28 +23,32 @@ void Frame::setWnd(HWND hWnd) {
 Frame::~Frame()
 {
 	 // *** 모든 윈도을 delete합니다.
-	for (int i = 0; i < numWidget; i++) {
-		delete windows[i];
+	/*
+	for (int i = 0; i < numWindows; i++) {
+		delete m_window[i];
 	}
+	numWindows = 0;
+	*/
 }
 
 void Frame::OnLButtonDown(long wParam, int x, int y)
 {
-	
-	OutputDebugString("Click\n");
-	// 윈도을 찾아서 윈도의 onMouseClick을 실행
-	Window *w = find(x, y);
-	if (w) 
-    {
-		w->onMouseClick(x, y);
-    }
-    
+	// Frame은 특별한 Container이므로 Override한다.
+	// OutputDebugString("Frame::Click\n");
+
+	if (!m_menubar) return;  // 그럴 리는 없지만 menubar가 없다면...
+	if (m_menubar->isInside(x, y)) {
+		m_menubar->onMouseClick(x, y);
+		return ;
+	}
+	m_canvas->onMouseDown(x, y - m_menubar->getHeight());
+ 
 	/* 
 	control key나 shift key등에 따라 다르게 하려면
 	if (wParam & MK_CONTROL)  .. MK_SHIFT 등
 
 	*/
-	// 위 코드는 테스트용이고, Frame 객체의 OnLButtonDown 함수를 호출해
+	// 위 코드는 테스트용이고, view 객체의 OnLButtonDown 함수를 호출해
 }
 
 void Frame::OnLButtonUp(long wParam, int x, int y)
@@ -111,9 +112,11 @@ void Frame::setTextColor(COLORREF color)
 	SetTextColor(hDC, color);
 }
 
-void Frame::setMenuBar(MenuBar *m)
+void Frame::processEvent(Window * src)
 {
-    m_Menubar = m;
+    for (int i = 0; i < numWindows; i++) {
+        
+    }
 }
 
 
@@ -139,20 +142,10 @@ void Frame::drawText(std::string str, int x, int y)
 	TextOut(hDC, x, y, str.c_str(), strlen(str.c_str()));
 }
 
-// 모든 윈도들을 다시 그려주는 함수.  수정이 필요할 것이다.
-void Frame::display()
-{
-	// *** 모든 윈도와 메뉴에 대해 display를 실행해줍니다.
-
-	for (int i = 0; i < numWidget; i++) {
-		windows[i]->display();
-	}
-}
-
 // 화면이 현재 제대로 안되어 있다고 알리는 함수입니다.
 // 이 함수를 호출하면 화면이 지워지고 
-// Main.cpp 쪽에 case WM_PAINT: 부분이 실행됩니다.
-// 결국은 Frame 객체의 display가 실행되겠죠.
+// Main 쪽에 case WM_PAINT: 부분이 실행됩니다.
+// 결국은 View 객체의 display가 실행되겠죠.
 void Frame::invalidate()
 {
 	InvalidateRect(myWnd, NULL, true);
@@ -161,37 +154,59 @@ void Frame::invalidate()
 // 모든 윈도들을 onInitialize 함수에서 초기화하자.
 void Frame::onInitialize()
 {
-	// *** 모든 윈도들을 여기에서 초기화하자.
-    registerWindow(new MenuBar("MenuBar",0,0,620, 30));
-    registerMenu(new Menu("File",0,0,620,30));
-    registerMenu(new Menu("Edit", 0, 0, 620, 30));
-    registerWindow(new Canvas("Canvas",0, 30, 620, 590));
-    
+    //empty	
 }
 
-void Frame::registerMenu(Menu * m)
-{
-    // *** 포인터 배열에 더해주고, 윈도에도 이 Frame 객체의 포인터를 저장해주자.
-    m->setFrame(this);
-    m_Menubar->setMenu(m);
-}
 
-void Frame::registerWindow(Window* w)
+/*
+void Frame::registerWindow(Window * w)
 {
-	 // *** 포인터 배열에 더해주고, 윈도에도 이 Frame 객체의 포인터를 저장해주자.
-	windows[numWidget++] = w;
+	 // *** 포인터 배열에 더해주고, 윈도에도 이 View 객체의 포인터를 저장해주자.
+	windows[numWindows++] = w;
 	w->setFrame(this);
 }
+*/
 
-
+/*
 Window * Frame::find(int x, int y) {
 	 // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
-	 for (int i = 0; i < this->numWidget; i++) {
-	 if (windows[i]->isInside(x, y)) return windows[i];
+	 bool b = m_menubar->isInside(x, y);
+	 if (b) {
+		 m_menubar->onMouseClick(x, y);
+		 return 0;
 	 } 
+	 else OutputDebugString("Click ");
+	 //for (int i = 0; i < this->numWidget; i++) {
+	 //if (windows[i]->isInside(x, y))
+	 //return windows[i];
+	 //}
 	 return (Window *)NULL;
+}
+*/
+
+void Frame::addMenuBar(MenuBar * mb)
+{
+	if (!mb) return;
+	addWindowLast(mb);
+	//mb->setFrame(this);
+	mb->setContainer(this);
+	mb->setSize(600, 30);
+	m_menubar = mb;
 }
 
 
+void Frame::setSize(int x, int y)
+{
+	Window::setSize(x, y);
+	if (m_menubar) m_menubar->setSize(x, 30);
+}
 
 
+void Frame::addCanvas(Canvas * c)
+{
+	if (!c) return;
+	addWindowLast(c);
+	//c->setFrame(this);
+	c->setContainer(this);
+	m_canvas = c;
+}

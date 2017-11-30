@@ -1,33 +1,84 @@
 #include "stdafx.h"
 #include "Menu.h"
 #include "Frame.h"
+#include "MenuItem.h"
 #include "Window.h"
-#include <string>
-
-Menu::Menu(const std::string name, int x, int y, int sx, int sy)
-    :MenuBar(name, x, y, sx, sy)
+void print(string);
+Menu::Menu(string title):Container(0,0,100,30)
 {
-    //사이즈 임시로 설정
+	m_text = title;
 }
 
-void Menu::setFrame(Frame *f)
+void Menu::addMenuItem(Window * w)
 {
-    m_Frame = f;
-}
-void Menu::setPos(int MenuCnt)
-{
-    if (MenuCnt == 0) m_x = 0;
-    else m_x = (m_xsize / 10) * MenuCnt;
-    m_xsize = m_xsize / 10;
+    w->setContainer(getFrame());
+    w->setPos(m_x, m_y, m_xsize, m_ysize, numWindows);
+    m_window[numWindows++] = w;
 }
 
 
-void Menu::draw()
+Window* Menu::find(int x, int y)
 {
-    m_Frame->rectangle(m_x, m_y, m_xsize, m_ysize);
-    m_Frame->drawText(m_text, m_x+15, m_y+5);
+    if (isInside(x, y)) {
+        m_stat = true; getFrame()->invalidate();
+        return this;
+    }
+    else if (m_stat) return Container::find(x, y);
+    else {
+        //m_stat = false;  getFrame()->invalidate();
+        return (Window *)0;
+    }
 }
 
+void Menu::display()
+{
+    Window::display();
+    if (m_stat)
+    {
+        for (int i = 0; i < numWindows; i++)
+        {
+            m_window[i]->display();
+        }
+    }
+    else return;
+}
+
+
+void Menu::setStat()
+{
+    if (m_stat)
+    {
+        m_stat = false;
+        getFrame()->invalidate();
+    }
+    return;
+}
+
+bool Menu::isInside(int x, int y) 
+{
+    if (Window::isInside(x, y)) return true;
+    for (int i = numWindows - 1; i >= 0; i--)
+    {
+        if (m_window[i]->isInside(x, y) && m_stat) return true;
+    }
+    return false;
+}
 Menu::~Menu()
 {
 }
+
+
+
+void Menu::onMouseClick(int x, int y)
+{
+    if (m_stat == false) {
+        m_stat = true; getFrame()->invalidate();
+    }
+    else {
+        for (int i = numWindows - 1; i >= 0; i--) {
+            if (m_window[i]->isInside(x, y))
+                m_window[i]->onMouseClick(x, y);
+        }
+    }
+}
+
