@@ -50,7 +50,7 @@ void Canvas::display()
 {
 	//getFrame()->drawText("여기는 캔버스", 200,200);
     for (int i = 0; i < PointCnt; i++) {
-        m_Point[i]->display();
+        m_Point[i]->display(getFrame()->m_FigureType,getFrame()->m_FigureColor);
     }
     //getFrame()->invalidate();
 }
