@@ -22,7 +22,7 @@ void Canvas::onMouseDown(int x, int y)
 {
 	string s = "Canvas: " + to_string(x) + ", " + to_string(y) + "\n";
 	OutputDebugString(s.c_str());
-    m_Point[PointCnt] = new Point(x, y);
+    m_Point[PointCnt] = new Point(x, y,getFrame()->m_FigureType,getFrame()->m_FigureColor);
     m_Point[PointCnt]->setContainer(m_container);
 
     /*
@@ -50,7 +50,7 @@ void Canvas::display()
 {
 	//getFrame()->drawText("여기는 캔버스", 200,200);
     for (int i = 0; i < PointCnt; i++) {
-        m_Point[i]->display(getFrame()->m_FigureType,getFrame()->m_FigureColor);
+        m_Point[i]->display();
     }
     //getFrame()->invalidate();
 }
