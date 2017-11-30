@@ -36,15 +36,19 @@ void Canvas::onMouseUp(int x, int y)
 {
     //HDC hdc;
     //LineTo(hdc, start_x, start_y);
-    m_Point[PointCnt]->end_x = x;
-    m_Point[PointCnt++]->end_y = y;
+    if (m_Point[PointCnt] != 0) {
+        m_Point[PointCnt]->end_x = x;
+        m_Point[PointCnt]->end_y = y;
+        PointCnt++;
+    }
+
     getFrame()->invalidate();
 }
 
 
 void Canvas::display()
 {
-	getFrame()->drawText("여기는 캔버스", 200,200);
+	//getFrame()->drawText("여기는 캔버스", 200,200);
     for (int i = 0; i < PointCnt; i++) {
         m_Point[i]->display();
     }
