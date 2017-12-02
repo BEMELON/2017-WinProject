@@ -1,6 +1,8 @@
 #pragma once
 #include "Window.h"
 #include <string>
+#include <list>
+using namespace std;
 class Container :
 	public Window
 {
@@ -9,10 +11,8 @@ public:
     Container(std::string name);
 	virtual ~Container();	// 가상 소멸자.
 protected:
-	Window * m_window[100];  // 나중에는 제대로 된 리스트로 바꿔야한다.
+    list<Window *> m_windowList;
     void onMouseClick(int x, int y);
-
-	int numWindows = 0;
 public:
 	void addWindowLast(Window * w);
 	void addWindowFirst(Window * w);

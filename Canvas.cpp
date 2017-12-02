@@ -10,13 +10,8 @@ Canvas::Canvas()
 
 Canvas::~Canvas()
 {
+    m_list.clear();
 }
-
-
-//void Canvas::setFrame(Frame *f)
-//{
-//	m_frame = f;
-//}
 
 
 void Canvas::onMouseDown(int x, int y)
@@ -26,43 +21,23 @@ void Canvas::onMouseDown(int x, int y)
 
     m_list.push_back(new Point(x, y, getFrame()->m_FigureType, getFrame()->m_FigureColor));
     m_list.back()->setContainer(m_container);
-
-
-    //m_Point[PointCnt] = new Point(x, y,getFrame()->m_FigureType,getFrame()->m_FigureColor);
-    //m_Point[PointCnt]->setContainer(m_container);
-
-   
 }
 
 void Canvas::onMouseUp(int x, int y)
 {
-    /*
-    if (m_Point[PointCnt] != 0) {
-        m_Point[PointCnt++]->setEnd(x, y);
-    }*/
-
+    //이 이벤트는, 완성이 되기전에 호출 되어야되고, 완성이 된 이후에 호출되어서는 안된다.
     if (!m_list.empty() && !m_list.back()->isCompleted) {
-        m_list.back()->setEnd(x, y); m_list.back()->isCompleted = 1;
+        m_list.back()->setEnd(x, y); m_list.back()->isCompleted = true;
+        getFrame()->invalidate();
     }
 
-    getFrame()->invalidate();
 }
 
 
 void Canvas::display()
 {
-	//getFrame()->drawText("여기는 캔버스", 200,200);
+    //완성이 되었을 경우에만 display 를 해주어야한다.
     for (list<Point *>::iterator iter = m_list.begin(); iter != m_list.end() ; iter++) {
         if((*iter)->isCompleted) (*iter)->display();
-    }
-    
-    /*
-     list<Point ::iterator iterEnd = m_list.end();
-  for(list<Point>::iterator iterPos = m_list.begin(); 
-    iterPos != iterEnd; 
-    ++iterPos )
-  {
-      iterPos->display();
-    //getFrame()->invalidate();
-    */
+    }   
 }

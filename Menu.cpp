@@ -12,8 +12,9 @@ Menu::Menu(string title):Container(0,0,100,30)
 void Menu::addMenuItem(Window * w)
 {
     w->setContainer(getFrame());
-    w->setPos(m_x, m_y, m_xsize, m_ysize, numWindows);
-    m_window[numWindows++] = w;
+    w->setPos(m_x, m_y, m_xsize, m_ysize, m_windowList.size());
+    m_windowList.push_back(w);
+    
 }
 
 
@@ -29,7 +30,6 @@ Window* Menu::find(int x, int y)
         return temp;
     }
     else {
-        //m_stat = false;  getFrame()->invalidate();
         return (Window *)0;
     }
 }
@@ -39,9 +39,8 @@ void Menu::display()
     Window::display();
     if (m_stat)
     {
-        for (int i = 0; i < numWindows; i++)
-        {
-            m_window[i]->display();
+        for (list<Window *>::iterator iter = m_windowList.begin(); iter != m_windowList.end(); ++iter) {
+            (*iter)->display();
         }
     }
     else return;
@@ -61,10 +60,10 @@ void Menu::setStat()
 bool Menu::isInside(int x, int y) 
 {
     if (Window::isInside(x, y)) return true;
-    for (int i = numWindows - 1; i >= 0; i--)
-    {
-        if (m_window[i]->isInside(x, y) && m_stat) return true;
+    for (list<Window *>::reverse_iterator iter = m_windowList.rbegin(); iter != m_windowList.rend(); ++iter) {
+        if ((*iter)->isInside(x, y) && m_stat) return true;
     }
+
     return false;
 }
 Menu::~Menu()
@@ -79,10 +78,11 @@ void Menu::onMouseClick(int x, int y)
         m_stat = true; getFrame()->invalidate();
     }
     else {
-        for (int i = numWindows - 1; i >= 0; i--) {
-            if (m_window[i]->isInside(x, y))
-                getFrame()->processEvent(m_window[i]);
-                m_window[i]->onMouseClick(x, y);
+        for (list<Window *>::reverse_iterator iter = m_windowList.rbegin(); iter != m_windowList.rend(); ++iter) {
+            if ((*iter)->isInside(x, y)) {
+                getFrame()->processEvent((*iter));
+                (*iter)->onMouseClick(x, y);
+            }
         }
     }
 }

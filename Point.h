@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "MenuBar.h"
 
 class Point :
     public Window
@@ -11,7 +12,9 @@ public:
     int start_x, start_y;
     int end_x, end_y;
     int m_type = 0,m_color = 0;
-    int isCompleted;
     void display();
+    //완성 되었는지 체크를 해주는 변수
+    bool isCompleted;
+    MenuBar m_MenuBar;
 };
 

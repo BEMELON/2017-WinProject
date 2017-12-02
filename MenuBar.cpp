@@ -27,11 +27,18 @@ void MenuBar::onMouseClick(int x, int y)
 }
 
 void MenuBar::addMenu(Menu *m) {
-	Container::addWindowLast(m);
+	//Container::addWindowLast(m);
+    m_windowList.push_back(m);
 	m->setContainer(this);
+    int i = 0;
+    for (list<Window *>::iterator iter = m_windowList.begin(); iter != m_windowList.end(); ++iter,i++) {
+        (*iter)->setX(i * 100);
+    }
+    /*
 	for (int i = 0; i < numWindows; i++) {
 		m_window[i]->setX(i * 100);
 	}
+    */
 }
 
 int MenuBar::getHeight()

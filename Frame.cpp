@@ -9,12 +9,11 @@
 using namespace std;
 enum{사각형,타원,선분};
 enum{검은색,빨간색,파란색};
-Frame::Frame(HWND w):Container(0,0,640,480),myWnd(w)
+Frame::Frame(HWND w) :Container(0, 0, 640, 480), myWnd(w)
 {
-	hDC = ::GetDC(w);
-	//setFrame(this);  // 이놈도 필요하다.
-	setContainer(this);   // 자신을 가리키게 만들어서 Frame임을 표시.
-	//onInitialize();
+    hDC = ::GetDC(w);
+
+    setContainer(this);   // 자신을 가리키게 만들어서 Frame임을 표시.
 }
 
 void Frame::setWnd(HWND hWnd) {
@@ -23,13 +22,8 @@ void Frame::setWnd(HWND hWnd) {
 
 Frame::~Frame()
 {
-	 // *** 모든 윈도을 delete합니다.
-	/*
-	for (int i = 0; i < numWindows; i++) {
-		delete m_window[i];
-	}
-	numWindows = 0;
-	*/
+    m_windowList.clear();
+
 }
 
 void Frame::OnLButtonDown(long wParam, int x, int y)
@@ -37,7 +31,7 @@ void Frame::OnLButtonDown(long wParam, int x, int y)
 	// Frame은 특별한 Container이므로 Override한다.
 	// OutputDebugString("Frame::Click\n");
 
-	if (!m_menubar) return;  // 그럴 리는 없지만 menubar가 없다면...
+	if (!m_menubar) return; 
 	if (m_menubar->isInside(x, y)) {
 		m_menubar->onMouseClick(x, y);
 		return ;
@@ -194,7 +188,7 @@ void Frame::addMenuBar(MenuBar * mb)
 {
 	if (!mb) return;
 	addWindowLast(mb);
-	//mb->setFrame(this);
+	
 	mb->setContainer(this);
 	mb->setSize(600, 30);
 	m_menubar = mb;
@@ -212,7 +206,7 @@ void Frame::addCanvas(Canvas * c)
 {
 	if (!c) return;
 	addWindowLast(c);
-	//c->setFrame(this);
+	
 	c->setContainer(this);
 	m_canvas = c;
 }

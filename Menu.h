@@ -21,6 +21,6 @@ public:
 protected:
 
 public:
-	//MenuBar * getMenuBar();
+	
 };
 
