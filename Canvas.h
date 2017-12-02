@@ -12,6 +12,7 @@ public:
 	~Canvas();
 	void onMouseDown(int x, int y);
     void onMouseUp(int x, int y);
+    void onKeyMouseClick(int x, int y);
 	void display();
     list<Point *> m_list;
 };

@@ -36,7 +36,12 @@ void Frame::OnLButtonDown(long wParam, int x, int y)
 		m_menubar->onMouseClick(x, y);
 		return ;
 	}
-	m_canvas->onMouseDown(x, y - m_menubar->getHeight());
+    if (wParam & MK_CONTROL) {
+        m_canvas->onKeyMouseClick(x, y);
+    }
+    else m_canvas->onMouseDown(x, y - m_menubar->getHeight());
+
+    
  
 	/* 
 	control key나 shift key등에 따라 다르게 하려면
@@ -79,7 +84,13 @@ void Frame::OnChar(long ch)
 	setTextColor(RGB(200, 100, 100));
 	drawText(s, 100, 100);
 	*/
-	OutputDebugString("Key 입력.\n");
+
+    string s;
+    s = "입력된 문자: ";
+    s += ch;
+    s += "\n";
+ 	OutputDebugString("Key 입력");
+    OutputDebugStringA(s.c_str());
 
 }
 

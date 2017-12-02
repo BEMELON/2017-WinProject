@@ -33,6 +33,19 @@ void Canvas::onMouseUp(int x, int y)
 
 }
 
+void Canvas::onKeyMouseClick(int x, int y)
+{
+    for (list<Point *>::reverse_iterator iter = m_list.rbegin(); iter != m_list.rend(); ++iter) {
+        if ((*iter)->isCompleted) {
+            if ((*iter)->isInside(x,y)) {
+                m_list.erase((++iter).base());
+                getFrame()->invalidate();
+                break;
+            }
+        }
+    }
+}
+
 
 void Canvas::display()
 {
