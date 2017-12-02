@@ -20,25 +20,21 @@ void MenuBar::onMouseClick(int x, int y)
 	//OutputDebugString("MenuBar Clicked. ");
 	//Container::onMouseClick(x, y);  // 소속 윈도 중에 해당자를 불러주는 일. 나중에 바꾼다.
 	Menu *m = (Menu *)find(x, y);
-	if (m) {
-		m->onMouseClick(x, y);
-	}
-    else Window::onMouseClick(x, y);
+    for (list<Window *>::iterator iter = m_windowList.begin(); iter != m_windowList.end(); ++iter) {
+        if (!(*iter)->isInside(x, y)) (*iter)->setStat();
+        else (*iter)->onMouseClick(x, y);
+    }
+    Window::onMouseClick(x, y);
 }
 
 void MenuBar::addMenu(Menu *m) {
-	//Container::addWindowLast(m);
+	
     m_windowList.push_back(m);
 	m->setContainer(this);
     int i = 0;
     for (list<Window *>::iterator iter = m_windowList.begin(); iter != m_windowList.end(); ++iter,i++) {
         (*iter)->setX(i * 100);
     }
-    /*
-	for (int i = 0; i < numWindows; i++) {
-		m_window[i]->setX(i * 100);
-	}
-    */
 }
 
 int MenuBar::getHeight()
