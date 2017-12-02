@@ -13,6 +13,17 @@ Canvas::~Canvas()
     m_list.clear();
 }
 
+void Canvas::Drag(int x, int y) {
+    string s = "클릭 전 좌표 :";
+    s = s + to_string(x) + ",  " + to_string(y) + "\n";
+    OutputDebugString(s.c_str());
+
+    for (list<Point *>::reverse_iterator iter = m_list.rbegin(); iter != m_list.rend(); ++iter) {
+        if ((*iter)->isInside(x, y)) {
+            (*iter)->isMoving = true; break;
+        }
+    }
+}
 
 void Canvas::onMouseDown(int x, int y)
 {
@@ -33,6 +44,13 @@ void Canvas::onMouseUp(int x, int y)
     s = s + to_string(x) + ",  " + to_string(y) + "\n";
     OutputDebugString(s.c_str());
     
+    for (list<Point *>::iterator iter = m_list.begin(); iter != m_list.end(); ++iter) {
+        if ((*iter)->isMoving) {
+            (*iter)->MovePos(x, y); (*iter)->isMoving = false; getFrame()->invalidate();
+            break;
+        }
+    }
+
     //이 이벤트는, 완성이 되기전에 호출 되어야되고, 완성이 된 이후에 호출되어서는 안된다.
     if (!m_list.empty() && !m_list.back()->isCompleted) {
         m_list.back()->setEnd(x, y); m_list.back()->isCompleted = true;

@@ -31,19 +31,19 @@ void Frame::OnLButtonDown(long wParam, int x, int y)
 	// Frame은 특별한 Container이므로 Override한다.
 	// OutputDebugString("Frame::Click\n");
     //바뀌지 않았다 가정으로 시작한다.
-    if (isChanged) isChanged = false;
 
 	if (m_menubar->isInside(x, y)) {
-		m_menubar->onMouseClick(x, y);
-		//return ;
+        m_menubar->onMouseClick(x, y);
 	}
     else if (wParam & MK_CONTROL) {
         m_canvas->onKeyMouseClick(x, y);
     }
-    else {
-        //만약 바뀌지 않았다면, 모양과 색을 초기화
+    else if(isChanged){
         m_canvas->onMouseDown(x, y);
-        if (!isChanged) InitStatus();
+        isChanged = false;
+    }
+    else {
+        m_canvas->Drag(x, y);
     }
 
 }

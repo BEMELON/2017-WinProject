@@ -16,6 +16,11 @@ void Point::setEnd(int x, int y)
     m_xsize = x - m_x ; m_ysize = y - m_y;
 }
 
+void Point::MovePos(int x, int y)
+{
+    m_x += x - m_x; m_y += y - m_y;
+   
+}
 bool Point::isInside(int x, int y)
 {
     if (m_xsize < 0 && m_ysize < 0) {

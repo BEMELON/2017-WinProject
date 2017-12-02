@@ -14,6 +14,10 @@ public:
     int m_type = 0,m_color = 0;
     void display();
     bool isInside(int x, int y);
+    void MovePos(int x, int y);
+
+    //드래그가 되는 중인지 체크를 해주는 함수
+    bool isMoving = false;
     //완성 되었는지 체크를 해주는 변수
     bool isCompleted;
     MenuBar m_MenuBar;

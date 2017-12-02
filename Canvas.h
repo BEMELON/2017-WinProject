@@ -14,6 +14,7 @@ public:
     void onMouseUp(int x, int y);
     void onKeyMouseClick(int x, int y);
 	void display();
+    void Drag(int x, int y);
     list<Point *> m_list;
 };
 
