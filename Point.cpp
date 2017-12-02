@@ -5,11 +5,15 @@
 
 enum { 사각형, 타원, 선분 };
 enum { 검은색, 빨간색, 파란색 };
-Point::Point(int x,int y,int type,int color)
-    :start_x(x),start_y(y),m_type(type),m_color(color)
+Point::Point(int x, int y, int type, int color)
+    :start_x(x), start_y(y), m_type(type), m_color(color), isCompleted(0)
 {   
 }
 
+void Point::setEnd(int x, int y)
+{
+    end_x = x; end_y = y;
+}
 void Point::display()
 {
     if(m_color == 검은색) getFrame()->setPen(RGB(0, 0, 0), 1);
