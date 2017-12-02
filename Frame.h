@@ -41,7 +41,7 @@ public:
 protected:
 
 public:
-	MenuBar *m_menubar = nullptr;  // 
+	MenuBar *m_menubar = nullptr;  
 	Canvas *m_canvas = nullptr;
 	void addMenuBar(MenuBar * mb);
 	void setSize(int x, int y);

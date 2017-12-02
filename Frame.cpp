@@ -32,14 +32,19 @@ void Frame::OnLButtonDown(long wParam, int x, int y)
 	// OutputDebugString("Frame::Click\n");
 
 	if (!m_menubar) return; 
+
 	if (m_menubar->isInside(x, y)) {
 		m_menubar->onMouseClick(x, y);
 		return ;
 	}
     if (wParam & MK_CONTROL) {
+        
         m_canvas->onKeyMouseClick(x, y);
     }
-    else m_canvas->onMouseDown(x, y - m_menubar->getHeight());
+    else {
+        //m_FigureColor = 검은색; m_FigureColor = 사각형;
+        m_canvas->onMouseDown(x, y);
+    }
 
     
  
@@ -53,6 +58,7 @@ void Frame::OnLButtonDown(long wParam, int x, int y)
 
 void Frame::OnLButtonUp(long wParam, int x, int y)
 {
+  
     m_canvas->onMouseUp(x, y);
 	/*
 	 * 아래는 선 색깔, 채움 색깔을 결정하는 방법을 알려줍니다.
@@ -84,13 +90,6 @@ void Frame::OnChar(long ch)
 	setTextColor(RGB(200, 100, 100));
 	drawText(s, 100, 100);
 	*/
-
-    string s;
-    s = "입력된 문자: ";
-    s += ch;
-    s += "\n";
- 	OutputDebugString("Key 입력");
-    OutputDebugStringA(s.c_str());
 
 }
 
@@ -124,10 +123,12 @@ void Frame::processEvent(Window * src)
         if (src->getTitle() == "사각형") m_FigureType = 사각형;
         else if (src->getTitle() == "타원") m_FigureType = 타원;
         else if (src->getTitle() == "선분") m_FigureType = 선분;
+        
 
         if (src->getTitle() == "검은색") m_FigureColor = 검은색;
         else if (src->getTitle() == "빨간색") m_FigureColor = 빨간색;
         else if (src->getTitle() == "파란색")m_FigureColor = 파란색;
+       
 }
 
 
