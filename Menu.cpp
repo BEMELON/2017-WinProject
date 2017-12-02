@@ -81,7 +81,8 @@ void Menu::onMouseClick(int x, int y)
         for (list<Window *>::reverse_iterator iter = m_windowList.rbegin(); iter != m_windowList.rend(); ++iter) {
             if ((*iter)->isInside(x, y)) {
                 getFrame()->processEvent((*iter));
-                (*iter)->onMouseClick(x, y);
+                getFrame()->isChanged = true;
+                return (*iter)->onMouseClick(x, y);
             }
         }
     }

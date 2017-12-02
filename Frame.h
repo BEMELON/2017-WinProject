@@ -37,6 +37,7 @@ public:
 	void drawText(std::string str, int x, int y);
 	void invalidate();
 	virtual void onInitialize();
+    void InitStatus();
 
 protected:
 
@@ -48,5 +49,6 @@ public:
 	void addCanvas(Canvas * c);
     int m_FigureType = 0;
     int m_FigureColor = 0;
+    bool isChanged = false;
 };
 

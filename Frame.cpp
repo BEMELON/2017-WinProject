@@ -30,32 +30,28 @@ void Frame::OnLButtonDown(long wParam, int x, int y)
 {
 	// Frame은 특별한 Container이므로 Override한다.
 	// OutputDebugString("Frame::Click\n");
-
-	if (!m_menubar) return; 
+    //바뀌지 않았다 가정으로 시작한다.
+    if (isChanged) isChanged = false;
 
 	if (m_menubar->isInside(x, y)) {
 		m_menubar->onMouseClick(x, y);
-		return ;
+		//return ;
 	}
-    if (wParam & MK_CONTROL) {
-        
+    else if (wParam & MK_CONTROL) {
         m_canvas->onKeyMouseClick(x, y);
     }
     else {
-        //m_FigureColor = 검은색; m_FigureColor = 사각형;
+        //만약 바뀌지 않았다면, 모양과 색을 초기화
         m_canvas->onMouseDown(x, y);
+        if (!isChanged) InitStatus();
     }
 
-    
- 
-	/* 
-	control key나 shift key등에 따라 다르게 하려면
-	if (wParam & MK_CONTROL)  .. MK_SHIFT 등
-
-	*/
-	// 위 코드는 테스트용이고, view 객체의 OnLButtonDown 함수를 호출해
 }
 
+void Frame::InitStatus()
+{
+    m_FigureColor = 0; m_FigureType = 0; 
+}
 void Frame::OnLButtonUp(long wParam, int x, int y)
 {
   
